@@ -3,6 +3,8 @@
 # include <iostream>
 # include <stdexcept>
 
+class Form;
+
 class Bureaucrat
 {
 	private:
@@ -22,6 +24,7 @@ class Bureaucrat
 		const std::string&	getName() const;
 		int					getGrade() const;
 
+		void				signForm(const Form &form) const;
 		void				incrementGrade();
 		void				decrementGrade();
 
