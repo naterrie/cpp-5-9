@@ -3,7 +3,7 @@
 # include <iostream>
 # include <stdexcept>
 
-class Form;
+class AForm;
 
 class Bureaucrat
 {
@@ -24,7 +24,7 @@ class Bureaucrat
 		const std::string&	getName() const;
 		int					getGrade() const;
 
-		void				signForm(const Form &form) const;
+		void				signForm(const AForm &form) const;
 		void				incrementGrade();
 		void				decrementGrade();
 

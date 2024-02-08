@@ -1,21 +1,21 @@
 #pragma once
 
-# include "Form.hpp"
+# include "AForm.hpp"
 
-class RobotomyRequest : public Form
+class RobotomyRequestForm : public AForm
 {
 	private:
 
-		const std::string	_target;
+		std::string	_target;
 
 	public:
 
-		RobotomyRequest();
-		RobotomyRequest(const std::string& target);
-		RobotomyRequest(const RobotomyRequest& other);
-		~RobotomyRequest();
+		RobotomyRequestForm();
+		RobotomyRequestForm(const std::string& target);
+		RobotomyRequestForm(const RobotomyRequestForm& other);
+		~RobotomyRequestForm();
 
-		RobotomyRequest&	operator=(const RobotomyRequest& other);
+		RobotomyRequestForm&	operator=(const RobotomyRequestForm& other);
 
 		const std::string&	getTarget() const;
 

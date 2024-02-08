@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Form.hpp"
+#include "AForm.hpp"
 #include <fstream>
 
-class ShrubberyCreationForm : public Form
+class ShrubberyCreationForm : public AForm
 {
 	private:
 
-		const std::string	_target;
+		std::string	_target;
 
 	public:
 
@@ -20,7 +20,7 @@ class ShrubberyCreationForm : public Form
 
 		const std::string&	getTarget() const;
 
-		class FormNotSignedException: public std::exception
+		class FileNotOpenException: public std::exception
 		{
 			public:
 				virtual const char*	what() const throw();

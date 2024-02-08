@@ -26,9 +26,8 @@ Bureaucrat::~Bureaucrat()
 
 Bureaucrat&	Bureaucrat::operator=(const Bureaucrat& other)
 {
-	if (this == &other)
-		return (*this);
-	this->_grade = other._grade;
+	if (this != &other)
+		this->_grade = other._grade;
 	return (*this);
 }
 
@@ -42,7 +41,7 @@ int	Bureaucrat::getGrade() const
 	return (this->_grade);
 }
 
-void	Bureaucrat::signForm(const Form &form) const
+void	Bureaucrat::signForm(const AForm &form) const
 {
 	if (form.getSigned())
 		std::cout << this->_name << " signs a form" << std::endl;

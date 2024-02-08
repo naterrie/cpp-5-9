@@ -2,22 +2,22 @@
 
 # include <iostream>
 # include <stdexcept>
-# include "Form.hpp"
+# include "AForm.hpp"
 
-class PresidentialPardon : public Form
+class PresidentialPardonForm : public AForm
 {
 	private:
 
-		const std::string	_target;
+		std::string	_target;
 
 	public:
 
-		PresidentialPardon();
-		PresidentialPardon(const std::string& target);
-		PresidentialPardon(const PresidentialPardon& other);
-		~PresidentialPardon();
+		PresidentialPardonForm();
+		PresidentialPardonForm(const std::string& target);
+		PresidentialPardonForm(const PresidentialPardonForm& other);
+		~PresidentialPardonForm();
 
-		PresidentialPardon&	operator=(const PresidentialPardon& other);
+		PresidentialPardonForm&	operator=(const PresidentialPardonForm& other);
 
 		const std::string&	getTarget() const;
 
