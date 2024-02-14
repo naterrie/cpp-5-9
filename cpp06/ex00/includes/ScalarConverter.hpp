@@ -5,6 +5,7 @@
 # include <stdexcept>
 # include <cstdlib>
 # include <cctype>
+# include <limits>
 
 class ScalarConverter
 {

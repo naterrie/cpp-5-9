@@ -2,6 +2,10 @@
 
 ScalarConverter::ScalarConverter(const std::string& input) : _input(input)
 {
+	_char = 0;
+	_int = 0;
+	_float = 0;
+	_double = 0;
 }
 
 ScalarConverter::~ScalarConverter()
@@ -10,81 +14,76 @@ ScalarConverter::~ScalarConverter()
 
 void	ScalarConverter::convert()
 {
-	_convertChar();
-	_convertInt();
-	_convertFloat();
-	_convertDouble();
+	if (_input.empty())
+	{
+		std::cerr << "Usage: ./convert [value]" << std::endl;
+		return;
+	}
+	if (_input.length() == 1 && !isdigit(_input[0]))
+	{
+		_convertChar();
+		std::cout << "char: " << _char << std::endl;
+		std::cout << "int: " << _int << std::endl;
+		std::cout << "float: " << _float << std::endl;
+		std::cout << "double: " << _double << std::endl;
+		return ;
+	}
+	int i = 0;
+	int dot = 0;
+	while (_input[i])
+	{
+		if (isdigit(_input[i]) || _input[i] == '.')
+		{
+			if (_input[i] == '.')
+				dot++;
+			i++;
+		}
+		else if (_input[i] == 'f' || _input[i] == 'e')
+		{
+			_convertFloat();
+			return;
+		}
+		else
+			return ;
+	}
+	if (dot == 1)
+		_convertDouble();
+	else if (dot == 0)
+		_convertInt();
+	else
+			return ;
+	std::cout << "char: " << _char << std::endl;
+	std::cout << "int: " << _int << std::endl;
+	std::cout << "float: " << _float << "f" << std::endl;
+	std::cout << "double: " << _double << std::endl;
 }
 
 void	ScalarConverter::_convertChar()
 {
-	try
-	{
-		int	c = std::atoi(_input.c_str());
-		if (c < 0 || c > 127)
-		{
-			std::cerr << "char: impossible" << std::endl;
-			return ;
-		}
-		std::cout << "char: '" << static_cast<char>(c) << "'" << std::endl;
-	}
-	catch (std::invalid_argument& e)
-	{
-		std::cerr << "char: impossible" << std::endl;
-	}
-	catch (std::out_of_range& e)
-	{
-		std::cerr << "char: impossible" << std::endl;
-	}
+	_char = _input[0];
+	_int = static_cast<int>(_char);
+	_float = static_cast<float>(_char);
+	_double = static_cast<double>(_char);
 }
 
 void	ScalarConverter::_convertInt()
 {
-	try
+	double temp = std::strtod(_input.c_str(), NULL);
+	if (temp < std::numeric_limits<int>::min() || temp > std::numeric_limits<int>::max())
 	{
-		int i = std::atoi(_input.c_str());
-		std::cout << "int: " << i << std::endl;
+		_convertDouble();
+		return ;
 	}
-	catch (std::invalid_argument& e)
-	{
-		std::cerr << "int: impossible" << std::endl;
-	}
-	catch (std::out_of_range& e)
-	{
-		std::cerr << "int: impossible" << std::endl;
-	}
+	_int = std::atoi(_input.c_str());
+	_char = static_cast<char>(_int);
+	_float = static_cast<float>(_int);
+	_double = static_cast<double>(_int);
 }
 
 void	ScalarConverter::_convertFloat()
 {
-	try
-	{
-		_float = std::stof(_input);
-		std::cout << "float: " << _float << "f" << std::endl;
-	}
-	catch (std::invalid_argument& e)
-	{
-		std::cerr << "float: impossible" << std::endl;
-	}
-	catch (std::out_of_range& e)
-	{
-		std::cerr << "float: impossible" << std::endl;
-	}
 }
 
 void	ScalarConverter::_convertDouble()
 {
-	try
-	{
-		_double = std::stod(_input);
-		std::cout << "double: " << _double << std::endl;
-	}
-	catch (std::invalid_argument& e)
-	{
-		std::cerr << "double: impossible" << std::endl;
-	}
-	catch (std::out_of_range& e)
-	{
-		std::cerr << "double: impossible" << std::endl;
-	}
 }
