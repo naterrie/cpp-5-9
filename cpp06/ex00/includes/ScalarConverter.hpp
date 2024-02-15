@@ -30,4 +30,5 @@ class ScalarConverter
 		~ScalarConverter();
 
 		void	convert();
+		void	printScalar();
 };

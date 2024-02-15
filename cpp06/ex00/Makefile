@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: celeste <celeste@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/25 16:19:25 by naterrie          #+#    #+#              #
-#    Updated: 2024/02/13 13:52:38 by naterrie         ###   ########lyon.fr    #
+#    Updated: 2024/02/15 03:29:01 by naterrie          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,9 @@ FLAGS = -Wall -Werror -Wextra -std=c++98 -I $(INC_DIR) -g3
 
 SRCS =	main.cpp \
 		ScalarConverter.cpp
+
+MAKE := make
+
 
 ############################## Rules ##########################################
 

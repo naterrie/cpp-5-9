@@ -22,10 +22,17 @@ void	ScalarConverter::convert()
 	if (_input.length() == 1 && !isdigit(_input[0]))
 	{
 		_convertChar();
-		std::cout << "char: " << _char << std::endl;
-		std::cout << "int: " << _int << std::endl;
-		std::cout << "float: " << _float << std::endl;
-		std::cout << "double: " << _double << std::endl;
+		printScalar();
+		return ;
+	}
+	if (_input == "nan" || _input == "nanf" || _input == "+inf" || _input == "+inff" || _input == "-inf" || _input == "-inff")
+	{
+		_double = std::strtod(_input.c_str(), NULL);
+		_float = std::strtof(_input.c_str(), NULL);
+		_int = static_cast<int>(_double);
+		if (!(_double < 0 || _double > 127) && _input.length() == 1)
+			_char = static_cast<char>(_double);
+		printScalar();
 		return ;
 	}
 	int i = 0;
@@ -41,6 +48,7 @@ void	ScalarConverter::convert()
 		else if (_input[i] == 'f' || _input[i] == 'e')
 		{
 			_convertFloat();
+			printScalar();
 			return;
 		}
 		else
@@ -52,10 +60,7 @@ void	ScalarConverter::convert()
 		_convertInt();
 	else
 			return ;
-	std::cout << "char: " << _char << std::endl;
-	std::cout << "int: " << _int << std::endl;
-	std::cout << "float: " << _float << "f" << std::endl;
-	std::cout << "double: " << _double << std::endl;
+	printScalar();
 }
 
 void	ScalarConverter::_convertChar()
@@ -75,15 +80,49 @@ void	ScalarConverter::_convertInt()
 		return ;
 	}
 	_int = std::atoi(_input.c_str());
-	_char = static_cast<char>(_int);
+	if (!(_int < 0 || _int > 127) && _input.length() == 1)
+		_char = static_cast<char>(_int);
 	_float = static_cast<float>(_int);
 	_double = static_cast<double>(_int);
 }
 
 void	ScalarConverter::_convertFloat()
 {
+	double temp = std::strtod(_input.c_str(), NULL);
+	if (temp > std::numeric_limits<double>::min() && temp < std::numeric_limits<double>::max())
+		_int = static_cast<int>(temp);
+	_float = std::strtof(_input.c_str(), NULL);
+	if (!(_float < 0 || _float > 127) && _input.length() == 1)
+		_char = static_cast<char>(_float);
+	_double = temp;
 }
 
 void	ScalarConverter::_convertDouble()
 {
+	if (_input == "nan" || _input == "+inf" || _input == "+inff" || _input == "-inf" || _input == "-inff" || _input == "nanf")
+	{
+		_double = std::strtod(_input.c_str(), NULL);
+		_float = std::strtof(_input.c_str(), NULL);
+		return ;
+	}
+	_double = std::strtod(_input.c_str(), NULL);
+	if (_double > std::numeric_limits<int>::min() && _double < std::numeric_limits<int>::max())
+		_int = static_cast<int>(_double);
+	if (!(_double < 0 || _double > 127) && _input.length() == 1)
+		_char = static_cast<char>(_double);
+	_float = static_cast<float>(_double);
+}
+
+void	ScalarConverter::printScalar()
+{
+	if (_char != 0)
+		std::cout << "char: " << _char << std::endl;
+	else
+		std::cout << "char: Non displayable" << std::endl;
+	if (((_input != "0" && _input != "0.0" && _input != "0.0f") && _int == 0) || (_input == "nan" || _input == "nanf" || _input == "+inf" || _input == "+inff" || _input == "-inf" || _input == "-inff"))
+		std::cout << "int: Impossible" << std::endl;
+	else
+		std::cout << "int: " << _int << std::endl;
+	std::cout << "float: " << _float << "f" << std::endl;
+	std::cout << "double: " << _double << std::endl;
 }
