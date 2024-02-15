@@ -92,7 +92,7 @@ void	ScalarConverter::_convertFloat()
 	if (temp > std::numeric_limits<double>::min() && temp < std::numeric_limits<double>::max())
 		_int = static_cast<int>(temp);
 	_float = std::strtof(_input.c_str(), NULL);
-	if (!(_float < 0 || _float > 127) && _input.length() == 1)
+	if (!(_float < 0 || _float > 127) && _input.length() == 2)
 		_char = static_cast<char>(_float);
 	_double = temp;
 }
