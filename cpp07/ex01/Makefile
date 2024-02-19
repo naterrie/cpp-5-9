@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: celeste <celeste@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/25 16:19:25 by naterrie          #+#    #+#              #
-#    Updated: 2024/02/19 16:47:36 by naterrie         ###   ########lyon.fr    #
+#    Updated: 2024/02/20 00:42:23 by celeste          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ DIR_OBJS := .objs
 
 OBJS =	$(addprefix $(DIR_OBJS)/, $(SRCS:.cpp=.o))
 
-NAME =	whatever
+NAME =	iter
 
 INC_DIR =	includes
 
