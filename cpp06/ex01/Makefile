@@ -6,7 +6,7 @@
 #    By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/25 16:19:25 by naterrie          #+#    #+#              #
-#    Updated: 2024/02/19 14:03:01 by naterrie         ###   ########lyon.fr    #
+#    Updated: 2024/02/19 14:03:22 by naterrie         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,14 +25,14 @@ DIR_OBJS := .objs
 
 OBJS =	$(addprefix $(DIR_OBJS)/, $(SRCS:.cpp=.o))
 
-NAME =	ScalarConverter
+NAME =	Serialization
 
 INC_DIR =	includes
 
 FLAGS = -Wall -Werror -Wextra -std=c++98 -I $(INC_DIR) -g3
 
 SRCS =	main.cpp \
-		ScalarConverter.cpp
+		Serialization.cpp
 
 MAKE := make
 
