@@ -20,13 +20,12 @@ int main(void)
 		rrf[0] = someRandomIntern.makeForm("shrubbery creation", "Bender");
 		rrf[1] = someRandomIntern.makeForm("robotomy request", "Bender");
 		rrf[2] = someRandomIntern.makeForm("presidential pardon", "Bender");
-		rrf[0]->beSigned(a);
-		rrf[1]->beSigned(b);
-		rrf[2]->beSigned(c);
-		rrf[0]->execute(a);
-		rrf[1]->execute(b);
-		rrf[2]->execute(c);
-
+		a.signForm(*rrf[0]);
+		b.signForm(*rrf[1]);
+		c.signForm(*rrf[2]);
+		a.executeForm(*rrf[0]);
+		b.executeForm(*rrf[1]);
+		c.executeForm(*rrf[2]);
 		delete rrf[0];
 		delete rrf[1];
 		delete rrf[2];

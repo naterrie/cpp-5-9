@@ -20,10 +20,10 @@ int main(void)
 	{
 		try
 		{
-		AForm *form = new ShrubberyCreationForm("tree");
-		Bureaucrat bureaucrat("bureaucrat", 1);
-		form->beSigned(bureaucrat);
-		form->execute(bureaucrat);
+			AForm *form = new ShrubberyCreationForm("tree");
+			Bureaucrat bureaucrat("bureaucrat", 1);
+			bureaucrat.signForm(*form);
+			bureaucrat.executeForm(*form);
 		}
 		catch (std::exception &e)
 		{
@@ -35,8 +35,8 @@ int main(void)
 		{
 			AForm *form = new RobotomyRequestForm("robot");
 			Bureaucrat bureaucrat("bureaucrat", 1);
-			form->beSigned(bureaucrat);
-			form->execute(bureaucrat);
+			bureaucrat.signForm(*form);
+			bureaucrat.executeForm(*form);
 		}
 		catch (std::exception &e)
 		{
@@ -48,8 +48,8 @@ int main(void)
 		{
 			AForm *form = new PresidentialPardonForm("president");
 			Bureaucrat bureaucrat("bureaucrat", 1);
-			form->beSigned(bureaucrat);
-			form->execute(bureaucrat);
+			bureaucrat.signForm(*form);
+			bureaucrat.executeForm(*form);
 		}
 		catch (std::exception &e)
 		{
