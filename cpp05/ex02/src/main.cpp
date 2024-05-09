@@ -22,8 +22,12 @@ int main(void)
 		{
 			AForm *form = new ShrubberyCreationForm("tree");
 			Bureaucrat bureaucrat("bureaucrat", 1);
+
+		std::cout << std::endl;
 			bureaucrat.signForm(*form);
 			bureaucrat.executeForm(*form);
+			std::cout << std::endl;
+			delete form;
 		}
 		catch (std::exception &e)
 		{
@@ -37,6 +41,8 @@ int main(void)
 			Bureaucrat bureaucrat("bureaucrat", 1);
 			bureaucrat.signForm(*form);
 			bureaucrat.executeForm(*form);
+			std::cout << std::endl;
+			delete form;
 		}
 		catch (std::exception &e)
 		{
@@ -50,6 +56,7 @@ int main(void)
 			Bureaucrat bureaucrat("bureaucrat", 1);
 			bureaucrat.signForm(*form);
 			bureaucrat.executeForm(*form);
+			delete form;
 		}
 		catch (std::exception &e)
 		{
