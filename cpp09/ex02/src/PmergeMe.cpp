@@ -17,16 +17,16 @@ void PmergeMe::fordJohnsonSortVector()
 
 	for (size_t i = 0; i < _vec.size(); i += 2)
 	{
-		if (i + 1 < vec.size())
+		if (i + 1 < _vec.size())
 		{
-			if (vec[i] > vec[i + 1])
-				std::swap(vec[i], vec[i + 1]);
+			if (_vec[i] > _vec[i + 1])
+				std::swap(_vec[i], _vec[i + 1]);
 
-			sorted_vec.push_back(vec[i + 1]);
-			remaining.push_back(vec[i]);
+			sorted_vec.push_back(_vec[i + 1]);
+			remaining.push_back(_vec[i]);
 		} else
 		{
-			remaining.push_back(vec[i]);
+			remaining.push_back(_vec[i]);
 		}
 	}
 
