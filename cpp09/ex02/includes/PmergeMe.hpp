@@ -13,6 +13,7 @@ class PmergeMe
 {
 	public:
 		PmergeMe(const std::vector<int>& seq);
+		~PmergeMe();
 
 		void fordJohnsonSortVector();
 		void fordJohnsonSortDeque();
@@ -23,11 +24,11 @@ class PmergeMe
 		double getElapsedTime() const;
 
 	private:
-		std::vector<int> vec;
-		std::deque<int> deq;
-		clock_t start_time;
-		clock_t end_time;
+		std::vector<int> _vec;
+		std::deque<int> _deq;
+		clock_t _start_time;
+		clock_t _end_time;
 
-		void insertWithMinimalComparisons(std::vector<int>& vec, int element);
-		void insertWithMinimalComparisons(std::deque<int>& deq, int element);
+		void _insertWithMinimalComparisons(std::vector<int>& vec, int element);
+		void _insertWithMinimalComparisons(std::deque<int>& deq, int element);
 };
