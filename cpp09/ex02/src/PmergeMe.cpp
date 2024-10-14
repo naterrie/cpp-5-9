@@ -24,10 +24,9 @@ void PmergeMe::fordJohnsonSortVector()
 
 			sorted_vec.push_back(_vec[i + 1]);
 			remaining.push_back(_vec[i]);
-		} else
-		{
-			remaining.push_back(_vec[i]);
 		}
+		else
+			remaining.push_back(_vec[i]);
 	}
 
 	for (size_t i = 1; i < sorted_vec.size(); ++i)
@@ -35,7 +34,8 @@ void PmergeMe::fordJohnsonSortVector()
 		int key = sorted_vec[i];
 		int j = i - 1;
 
-		while (j >= 0 && sorted_vec[j] > key) {
+		while (j >= 0 && sorted_vec[j] > key)
+		{
 			sorted_vec[j + 1] = sorted_vec[j];
 			j--;
 		}
@@ -70,9 +70,7 @@ void PmergeMe::fordJohnsonSortDeque()
 			remaining.push_back(_deq[i]);
 		}
 		else
-		{
 			remaining.push_back(_deq[i]);
-		}
 	}
 
 	for (size_t i = 1; i < sorted_deq.size(); ++i)
@@ -88,12 +86,8 @@ void PmergeMe::fordJohnsonSortDeque()
 		sorted_deq[j + 1] = key;
 	}
 
-	std::sort(sorted_deq.begin(), sorted_deq.end());
-
 	for (size_t i = 0; i < remaining.size(); ++i)
-	{
 		_insertWithMinimalComparisons(sorted_deq, remaining[i]);
-	}
 
 	_deq = sorted_deq;
 
