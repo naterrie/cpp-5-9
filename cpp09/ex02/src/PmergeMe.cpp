@@ -2,6 +2,7 @@
 
 PmergeMe::PmergeMe(const std::vector<int>& seq): _vec(seq.begin(), seq.end()), _deq(seq.begin(), seq.end())
 {}
+
 PmergeMe::~PmergeMe()
 {}
 
@@ -28,7 +29,6 @@ void PmergeMe::fordJohnsonSortVector()
 		else
 			remaining.push_back(_vec[i]);
 	}
-
 	for (size_t i = 1; i < sorted_vec.size(); ++i)
 	{
 		int key = sorted_vec[i];
@@ -43,7 +43,7 @@ void PmergeMe::fordJohnsonSortVector()
 	}
 
 	for (size_t i = 0; i < remaining.size(); ++i)
-		_insertWithMinimalComparisons(sorted_vec, remaining[i]);
+		_dichotomicInsert(sorted_vec, remaining[i]);
 
 	_vec = sorted_vec;
 
@@ -59,6 +59,7 @@ void PmergeMe::fordJohnsonSortDeque()
 
 	std::deque<int> sorted_deq;
 	std::deque<int> remaining;
+
 	for (size_t i = 0; i < _deq.size(); i += 2)
 	{
 		if (i + 1 < _deq.size())
@@ -87,13 +88,12 @@ void PmergeMe::fordJohnsonSortDeque()
 	}
 
 	for (size_t i = 0; i < remaining.size(); ++i)
-		_insertWithMinimalComparisons(sorted_deq, remaining[i]);
+		_dichotomicInsert(sorted_deq, remaining[i]);
 
 	_deq = sorted_deq;
 
 	_end_time = clock();
 }
-
 
 void PmergeMe::printSequenceVector(const std::string& message)
 {
@@ -118,14 +118,13 @@ double PmergeMe::getElapsedTime() const
 	return static_cast<double>(_end_time - _start_time) / CLOCKS_PER_SEC;
 }
 
-void PmergeMe::_insertWithMinimalComparisons(std::vector<int>& vec, int element)
+void PmergeMe::_dichotomicInsert(std::vector<int>& vec, int element)
 {
 	std::vector<int>::iterator it = std::lower_bound(vec.begin(), vec.end(), element);
 	vec.insert(it, element);
 }
 
-
-void PmergeMe::_insertWithMinimalComparisons(std::deque<int>& deq, int element)
+void PmergeMe::_dichotomicInsert(std::deque<int>& deq, int element)
 {
 	std::deque<int>::iterator it = std::lower_bound(deq.begin(), deq.end(), element);
 	deq.insert(it, element);

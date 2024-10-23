@@ -1,6 +1,6 @@
-#pragma once
+#ifndef PMERGEME_HPP
+#define PMERGEME_HPP
 
-#include <algorithm>
 #include <iostream>
 #include <vector>
 #include <deque>
@@ -29,6 +29,8 @@ class PmergeMe
 		clock_t _start_time;
 		clock_t _end_time;
 
-		void _insertWithMinimalComparisons(std::vector<int>& vec, int element);
-		void _insertWithMinimalComparisons(std::deque<int>& deq, int element);
+		void _dichotomicInsert(std::vector<int>& vec, int element);
+		void _dichotomicInsert(std::deque<int>& deq, int element);
 };
+
+#endif
