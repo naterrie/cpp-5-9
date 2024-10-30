@@ -13,13 +13,13 @@ class RPN
 		RPN();
 		~RPN();
 		RPN(const RPN &src);
-		RPN &operator=(const RPN &src);
+		RPN	&operator=(const RPN &src);
 
-		int calculate(const std::string &expression);
+		int	calculate(const std::string &expression);
 
 	private:
-		void _applyOperator(char op, std::stack<int> &stack);
-		bool _isOperator(char c);
+		void	_applyOperator(char op, std::stack<int> &stack);
+		bool	_isOperator(char c);
 };
 
 #endif

@@ -14,15 +14,15 @@ class BitcoinExchange
 		BitcoinExchange(const std::string& databaseFilename);
 		~BitcoinExchange();
 
-		bool loadDatabase();
-		void processInputFile(const std::string& inputFilename);
+		bool	loadDatabase();
+		void	processInputFile(const std::string& inputFilename);
 
 	private:
-		std::string _databaseFilename;
-		std::map<std::string, float> _db;
+		std::string	_databaseFilename;
+		std::map<std::string, float>	_db;
 
-		bool isValidDate(const std::string& date);
-		std::string findClosestDate(const std::string& date);
+		bool		_isValidDate(const std::string& date);
+		std::string	_findClosestDate(const std::string& date);
 };
 
 #endif

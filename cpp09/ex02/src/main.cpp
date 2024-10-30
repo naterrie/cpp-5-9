@@ -31,7 +31,7 @@ int main(int argc, char** argv)
 	vecSorter.printContainer(vecInput, "After: ");
 	vecSorter.timeProcess("vector");
 
-	/* Using the same sort, so i dont print */
+	// Using the same fuction, so i dont print the container again
 	PmergeMe<std::deque<int> > deqSorter;
 	deqSorter.sort(deqInput);
 	deqSorter.timeProcess("deque");

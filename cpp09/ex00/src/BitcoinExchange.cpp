@@ -7,20 +7,6 @@ BitcoinExchange::BitcoinExchange(const std::string& databaseFilename) : _databas
 BitcoinExchange::~BitcoinExchange()
 {}
 
-bool BitcoinExchange::isValidDate(const std::string& date)
-{
-	if (date.length() != 10 || date[4] != '-' || date[7] != '-')
-		return false;
-
-	int year = atoi(date.substr(0, 4).c_str());
-	int month = atoi(date.substr(5, 2).c_str());
-	int day = atoi(date.substr(8, 2).c_str());
-
-	if (month < 1 || month > 12 || day < 1 || day > 31 || year < 2000 || year > 2100)
-		return false;
-	return true;
-}
-
 bool BitcoinExchange::loadDatabase()
 {
 	std::ifstream file(_databaseFilename.c_str());
@@ -42,17 +28,6 @@ bool BitcoinExchange::loadDatabase()
 	}
 	file.close();
 	return true;
-}
-
-std::string BitcoinExchange::findClosestDate(const std::string& date)
-{
-	std::map<std::string, float>::const_iterator it = _db.lower_bound(date);
-	if (it == _db.end() || it->first != date)
-	{
-		if (it != _db.begin())
-			--it;
-	}
-	return it->first;
 }
 
 void BitcoinExchange::processInputFile(const std::string& inputFilename)
@@ -79,7 +54,7 @@ void BitcoinExchange::processInputFile(const std::string& inputFilename)
 			continue;
 		}
 
-		if (!isValidDate(date))
+		if (!_isValidDate(date))
 		{
 			std::cerr << "Error: bad input => " << line << std::endl;
 			continue;
@@ -94,7 +69,7 @@ void BitcoinExchange::processInputFile(const std::string& inputFilename)
 			continue;
 		}
 
-		std::string closestDate = findClosestDate(date);
+		std::string closestDate = _findClosestDate(date);
 		float rate = _db[closestDate];
 		float result = rate * value;
 
@@ -102,4 +77,29 @@ void BitcoinExchange::processInputFile(const std::string& inputFilename)
 	}
 
 	file.close();
+}
+
+bool BitcoinExchange::_isValidDate(const std::string& date)
+{
+	if (date.length() != 10 || date[4] != '-' || date[7] != '-')
+		return false;
+
+	int year = atoi(date.substr(0, 4).c_str());
+	int month = atoi(date.substr(5, 2).c_str());
+	int day = atoi(date.substr(8, 2).c_str());
+
+	if (month < 1 || month > 12 || day < 1 || day > 31 || year < 2000 || year > 2100)
+		return false;
+	return true;
+}
+
+std::string BitcoinExchange::_findClosestDate(const std::string& date)
+{
+	std::map<std::string, float>::const_iterator it = _db.lower_bound(date);
+	if (it == _db.end() || it->first != date)
+	{
+		if (it != _db.begin())
+			--it;
+	}
+	return it->first;
 }

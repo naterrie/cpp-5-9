@@ -6,18 +6,21 @@ void PmergeMe<T>::sort(T &container)
 	if (container.size() <= 1)
 		return;
 
-	this->_start = clock();
+	this->_start = clock(); // Start the clock
 	_fordJohnsonSort(container, 0, container.size() - 1);
-	this->_end = clock();
+	this->_end = clock(); // End the clock
 }
 
 template <typename T>
 void PmergeMe<T>::_fordJohnsonSort(T &container, int start, int end)
 {
+	// If the container has only one element or aleady sorted return
 	if (end - start <= 0)
 		return;
 
 	T winners, losers;
+
+	// Compare elements in pairs
 	for (int i = start; i < end; i += 2)
 	{
 		if (container[i] > container[i + 1])
@@ -32,6 +35,7 @@ void PmergeMe<T>::_fordJohnsonSort(T &container, int start, int end)
 		}
 	}
 
+	// If the container has an odd number of elements, save the last element
 	bool hasOddElement = (end - start + 1) % 2 != 0;
 	int oddElement;
 	if (hasOddElement)
@@ -52,17 +56,8 @@ void PmergeMe<T>::_fordJohnsonSort(T &container, int start, int end)
 template <typename T>
 void PmergeMe<T>::_insertBinary(T &sortedChain, int value)
 {
-	int left = 0;
-	int right = sortedChain.size() - 1;
-	while (left <= right)
-	{
-		int mid = left + (right - left) / 2;
-		if (sortedChain[mid] < value)
-			left = mid + 1;
-		else
-			right = mid - 1;
-	}
-	sortedChain.insert(sortedChain.begin() + left, value);
+	typename T::iterator pos = std::lower_bound(sortedChain.begin(), sortedChain.end(), value);
+	sortedChain.insert(pos, value);
 }
 
 template <typename T>
