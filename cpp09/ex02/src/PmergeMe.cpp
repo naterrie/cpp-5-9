@@ -1,131 +1,86 @@
 #include "PmergeMe.hpp"
 
-PmergeMe::PmergeMe(const std::vector<int>& seq): _vec(seq.begin(), seq.end()), _deq(seq.begin(), seq.end())
-{}
-
-PmergeMe::~PmergeMe()
-{}
-
-void PmergeMe::fordJohnsonSortVector()
+template <typename T>
+void PmergeMe<T>::sort(T &container)
 {
-	_start_time = clock();
-
-	if (_vec.size() < 2)
+	if (container.size() <= 1)
 		return;
 
-	std::vector<int> sorted_vec;
-	std::vector<int> remaining;
-
-	for (size_t i = 0; i < _vec.size(); i += 2)
-	{
-		if (i + 1 < _vec.size())
-		{
-			if (_vec[i] > _vec[i + 1])
-				std::swap(_vec[i], _vec[i + 1]);
-
-			sorted_vec.push_back(_vec[i + 1]);
-			remaining.push_back(_vec[i]);
-		}
-		else
-			remaining.push_back(_vec[i]);
-	}
-	for (size_t i = 1; i < sorted_vec.size(); ++i)
-	{
-		int key = sorted_vec[i];
-		int j = i - 1;
-
-		while (j >= 0 && sorted_vec[j] > key)
-		{
-			sorted_vec[j + 1] = sorted_vec[j];
-			j--;
-		}
-		sorted_vec[j + 1] = key;
-	}
-
-	for (size_t i = 0; i < remaining.size(); ++i)
-		_dichotomicInsert(sorted_vec, remaining[i]);
-
-	_vec = sorted_vec;
-
-	_end_time = clock();
+	this->_start = clock();
+	_fordJohnsonSort(container, 0, container.size() - 1);
+	this->_end = clock();
 }
 
-void PmergeMe::fordJohnsonSortDeque()
+template <typename T>
+void PmergeMe<T>::_fordJohnsonSort(T &container, int start, int end)
 {
-	_start_time = clock();
-
-	if (_deq.size() < 2)
+	if (end - start <= 0)
 		return;
 
-	std::deque<int> sorted_deq;
-	std::deque<int> remaining;
-
-	for (size_t i = 0; i < _deq.size(); i += 2)
+	T winners, losers;
+	for (int i = start; i < end; i += 2)
 	{
-		if (i + 1 < _deq.size())
+		if (container[i] > container[i + 1])
 		{
-			if (_deq[i] > _deq[i + 1])
-				std::swap(_deq[i], _deq[i + 1]);
-
-			sorted_deq.push_back(_deq[i + 1]);
-			remaining.push_back(_deq[i]);
+			winners.push_back(container[i]);
+			losers.push_back(container[i + 1]);
 		}
 		else
-			remaining.push_back(_deq[i]);
-	}
-
-	for (size_t i = 1; i < sorted_deq.size(); ++i)
-	{
-		int key = sorted_deq[i];
-		int j = i - 1;
-
-		while (j >= 0 && sorted_deq[j] > key)
 		{
-			sorted_deq[j + 1] = sorted_deq[j];
-			j--;
+			winners.push_back(container[i + 1]);
+			losers.push_back(container[i]);
 		}
-		sorted_deq[j + 1] = key;
 	}
 
-	for (size_t i = 0; i < remaining.size(); ++i)
-		_dichotomicInsert(sorted_deq, remaining[i]);
+	bool hasOddElement = (end - start + 1) % 2 != 0;
+	int oddElement;
+	if (hasOddElement)
+		oddElement = container[end];
 
-	_deq = sorted_deq;
+	_fordJohnsonSort(winners, 0, winners.size() - 1);
 
-	_end_time = clock();
+	for (typename T::iterator it = losers.begin(); it != losers.end(); ++it)
+		_insertBinary(winners, *it);
+
+	if (hasOddElement)
+		_insertBinary(winners, oddElement);
+
+	for (typename T::size_type i = 0; i < winners.size(); ++i)
+		container[start + i] = winners[i];
 }
 
-void PmergeMe::printSequenceVector(const std::string& message)
+template <typename T>
+void PmergeMe<T>::_insertBinary(T &sortedChain, int value)
 {
-	std::cout << message;
-	for (std::vector<int>::iterator it = _vec.begin(); it != _vec.end(); ++it)
-		std::cout << *it << " ";
-	std::cout << std::endl;
+	int left = 0;
+	int right = sortedChain.size() - 1;
+	while (left <= right)
+	{
+		int mid = left + (right - left) / 2;
+		if (sortedChain[mid] < value)
+			left = mid + 1;
+		else
+			right = mid - 1;
+	}
+	sortedChain.insert(sortedChain.begin() + left, value);
 }
 
-void PmergeMe::printSequenceDeque(const std::string& message)
+template <typename T>
+void PmergeMe<T>::printContainer(const T &container, std::string prefix)
 {
-	std::cout << message;
-
-	for (std::deque<int>::iterator it = _deq.begin(); it != _deq.end(); ++it)
+	std::cout << prefix;
+	for (typename T::const_iterator it = container.begin(); it != container.end(); ++it)
 		std::cout << *it << " ";
 
 	std::cout << std::endl;
 }
 
-double PmergeMe::getElapsedTime() const
+template <typename T>
+void PmergeMe<T>::timeProcess(std::string type)
 {
-	return static_cast<double>(_end_time - _start_time) / CLOCKS_PER_SEC;
+	double timeTaken = static_cast<double>(this->_end - this->_start);
+	std::cout << "Time to process with std::" << type << ": " << timeTaken << " us" << std::endl;
 }
 
-void PmergeMe::_dichotomicInsert(std::vector<int>& vec, int element)
-{
-	std::vector<int>::iterator it = std::lower_bound(vec.begin(), vec.end(), element);
-	vec.insert(it, element);
-}
-
-void PmergeMe::_dichotomicInsert(std::deque<int>& deq, int element)
-{
-	std::deque<int>::iterator it = std::lower_bound(deq.begin(), deq.end(), element);
-	deq.insert(it, element);
-}
+template class PmergeMe<std::vector<int> >;
+template class PmergeMe<std::deque<int> >;

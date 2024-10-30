@@ -4,54 +4,37 @@ int main(int argc, char** argv)
 {
 	if (argc < 2)
 	{
-		std::cerr << "Error: You must provide a sequence of positive integers." << std::endl;
+		std::cerr << "Usage: " << argv[0] << " <positive numbers>" << std::endl;
 		return 1;
 	}
 
-	std::vector<int> sequence;
+	std::vector<int> vecInput;
+	std::deque<int> deqInput;
 
 	for (int i = 1; i < argc; ++i)
 	{
+		int num;
 		std::istringstream iss(argv[i]);
-		long long number;
-		iss >> number;
-
-		if (iss.fail() || !iss.eof())
+		if (!(iss >> num) || num <= 0)
 		{
-			std::cerr << "Error: \"" << argv[i] << "\" is not a valid integer." << std::endl;
+			std::cerr << "All arguments must be positive numbers." << std::endl;
 			return 1;
 		}
-
-		if (number < 0)
-		{
-			std::cerr << "Error: Negative numbers are not allowed." << std::endl;
-			return 1;
-		}
-
-		if (number > std::numeric_limits<int>::max())
-		{
-			std::cerr << "Error: The number \"" << number << "\" exceeds the maximum allowed integer value." << std::endl;
-			return 1;
-		}
-
-		sequence.push_back(static_cast<int>(number));
+		vecInput.push_back(num);
+		deqInput.push_back(num);
 	}
 
-	std::cout << "Before: ";
-	for (size_t i = 0; i < sequence.size(); ++i)
-		std::cout << sequence[i] << " ";
+	PmergeMe<std::vector<int> > vecSorter;
 
-	std::cout << std::endl;
+	vecSorter.printContainer(vecInput, "Before: ");
+	vecSorter.sort(vecInput);
+	vecSorter.printContainer(vecInput, "After: ");
+	vecSorter.timeProcess("vector");
 
-	PmergeMe pmerge(sequence);
-
-	pmerge.fordJohnsonSortVector();
-	pmerge.printSequenceVector("After: ");
-	std::cout << "Time to process a range of " << sequence.size() << " elements with std::vector: " << pmerge.getElapsedTime() << " us" << std::endl;
-
-	pmerge.fordJohnsonSortDeque();
-	pmerge.printSequenceDeque("After: ");
-	std::cout << "Time to process a range of " << sequence.size() << " elements with std::deque: " << pmerge.getElapsedTime() << " us" << std::endl;
+	/* Using the same sort, so i dont print */
+	PmergeMe<std::deque<int> > deqSorter;
+	deqSorter.sort(deqInput);
+	deqSorter.timeProcess("deque");
 
 	return 0;
 }

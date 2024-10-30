@@ -1,36 +1,29 @@
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
-#include <iostream>
 #include <vector>
 #include <deque>
-#include <ctime>
-#include <cstdlib>
-#include <limits>
+#include <iostream>
 #include <sstream>
+#include <typeinfo>
 
+template <typename T>
 class PmergeMe
 {
 	public:
-		PmergeMe(const std::vector<int>& seq);
-		~PmergeMe();
+		PmergeMe() {}
+		~PmergeMe() {}
 
-		void fordJohnsonSortVector();
-		void fordJohnsonSortDeque();
+		void	sort(T &container);
 
-		void printSequenceVector(const std::string& message);
-		void printSequenceDeque(const std::string& message);
-
-		double getElapsedTime() const;
+		void	printContainer(const T &container, const std::string prefix);
+		void	timeProcess(const std::string type);
 
 	private:
-		std::vector<int> _vec;
-		std::deque<int> _deq;
-		clock_t _start_time;
-		clock_t _end_time;
-
-		void _dichotomicInsert(std::vector<int>& vec, int element);
-		void _dichotomicInsert(std::deque<int>& deq, int element);
+		void	_fordJohnsonSort(T &container, int start, int end);
+		void	_insertBinary(T &sortedChain, int value);
+		clock_t	_start;
+		clock_t	_end;
 };
 
 #endif
